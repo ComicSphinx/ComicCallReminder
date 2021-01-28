@@ -5,7 +5,7 @@ from PyQt5 import QtWidgets
 from datetime import datetime as dt
 
 import design.MainWindow
-import design.List.Ui_List
+#import design.List.Ui_List
 from database.DatabaseUtilities import DatabaseUtilities as dbu
 
 class MainWindow(QtWidgets.QMainWindow, design.MainWindow.Ui_MainWindow):
@@ -21,7 +21,7 @@ class MainWindow(QtWidgets.QMainWindow, design.MainWindow.Ui_MainWindow):
     
     def initUI(self):
         self.pushButton.clicked.connect(self.btnClicked)
-        self.showButton.clicked.connect(self.showClicked)
+        # self.showButton.clicked.connect(self.showClicked)
         
     def btnClicked(self):
         time, number, comment = self.getData()
@@ -29,8 +29,8 @@ class MainWindow(QtWidgets.QMainWindow, design.MainWindow.Ui_MainWindow):
         dbu.insertDataToDB(tmpString)
         # в конце нужно очистить все поля и выдать уведомление - сохранено
 
-    def showClicked(self):
-        #Ui_List.show()
+    # def showClicked(self):
+    #     #Ui_List.show()
 
     def getData(self):
         time = self.timeEdit.time()

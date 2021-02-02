@@ -13,37 +13,49 @@ class DatabaseUtilities():
             return 0
 
     def createDB(self):
-        """ Create database and connect to it """
         connection, cursor = self.connectDB(self)
-        """ Create table in database (year, month | day | minutes | record)"""
         cursor.execute("CREATE TABLE records (year int, month int, day int, te time , number VARCHAR(12), comment VARCHAR(200));")
-        """ Save changes and close connection """
         self.saveAndCloseDB(self, connection)
 
     def connectDB(self):
-        """ Connect to database """
         connection = sqlite3.connect(self.databaseFilePath)
         cursor = connection.cursor()
         return connection, cursor
     
     def saveAndCloseDB(self, connection):
-        """ Save changes """
         connection.commit()
-        """ Close connection """
         connection.close()
 
-    def insertDataToDb(self, str):
+    def insertDataToDB(self, str):
         connection, cursor = self.connectDB(self)
         cursor.execute(str)
         self.saveAndCloseDB(self, connection)
 
+    def buildInsert(self, time, number, comment):
+        insert = "INSERT INTO records VALUES("
+        insert += "'" + str(dt.now().year)
+        insert += "','" + str(dt.now().month)
+        insert += "','" + str(dt.now().day)
+        insert += "','" + str(time)
+        insert += "','" + str(number)
+        insert += "', '" + comment + "');"
+        return insert     
 
-    def buildInsertString(self, time, number, comment):
-        tmpString = "INSERT INTO records VALUES("
-        tmpString += str(dt.now().year)
-        tmpString += "," + str(dt.now().month)
-        tmpString += "," + str(dt.now().day)
-        tmpString += "," + str(time)
-        tmpString += "," + str(number)
-        tmpString += "," + comment + "');"
-        return tmpString     
+    def buildSelect(self, year, month, day):
+        select = "SELECT * FROM records WHERE year = "
+        select += str(year)
+        select += " AND month = "
+        select += str(month)
+        select += " AND day = "
+        select += str(day)
+        return select
+
+    def getTimesNumbersCommentsBySelect(self, data):
+        times = []
+        numbers = []
+        comments = []
+        for i in range(len(data)):
+            times.append(data[i][3])
+            numbers.append(data[i][4])
+            comments.append(data[i][5])
+        return times, numbers, comments

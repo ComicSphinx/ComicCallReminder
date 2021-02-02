@@ -5,7 +5,7 @@ from PyQt5 import QtWidgets
 from datetime import datetime as dt
 
 import design.MainWindow
-#import design.List.Ui_List
+from List import ListWidget
 from database.DatabaseUtilities import DatabaseUtilities as dbu
 
 class MainWindow(QtWidgets.QMainWindow, design.MainWindow.Ui_MainWindow):
@@ -20,18 +20,18 @@ class MainWindow(QtWidgets.QMainWindow, design.MainWindow.Ui_MainWindow):
         self.initUI()
     
     def initUI(self):
-        self.pushButton.clicked.connect(self.btnClicked)
-        # self.showButton.clicked.connect(self.showClicked)
+        self.btn_remind.clicked.connect(self.clicked_remind)
+        self.btn_show.clicked.connect(self.clicked_show)
         
-    def btnClicked(self):
+    def clicked_remind(self):
         time, number, comment = self.getData()
-        tmpString = dbu.buildInsertString(time, number, comment)
-        print(time,number,comment)
-        dbu.insertDataToDB(tmpString)
+        tmpString = dbu.buildInsert(dbu, time, number, comment)
+        dbu.insertDataToDB(dbu, tmpString)
         # в конце нужно очистить все поля и выдать уведомление - сохранено
 
-    # def showClicked(self):
-    #     #Ui_List.show()
+    def clicked_show(self):
+        self.list = ListWidget()
+        self.list.show()
 
     def getData(self):
         time = self.timeEdit.time()

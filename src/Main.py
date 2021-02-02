@@ -26,6 +26,7 @@ class MainWindow(QtWidgets.QMainWindow, design.MainWindow.Ui_MainWindow):
     def btnClicked(self):
         time, number, comment = self.getData()
         tmpString = dbu.buildInsertString(time, number, comment)
+        print(time,number,comment)
         dbu.insertDataToDB(tmpString)
         # в конце нужно очистить все поля и выдать уведомление - сохранено
 
@@ -36,6 +37,7 @@ class MainWindow(QtWidgets.QMainWindow, design.MainWindow.Ui_MainWindow):
         time = self.timeEdit.time()
         number = self.numberTextEdit.toPlainText()
         comment = self.commentTextEdit.toPlainText()
+        print(time,number,comment)
         return time, number, comment
 
 def main():

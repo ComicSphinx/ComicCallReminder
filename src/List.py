@@ -11,9 +11,8 @@ class ListWidget(QtWidgets.QWidget, design.ListWidget.Ui_List):
         self.printRecords()
 
     def printRecords(self):
-        select = dbu.buildSelect(dbu, dt.now().year, dt.now().month, dt.now().day)
+        select = dbu.getDataByYearMonthDay(dbu, dt.now().year, dt.now().month, dt.now().day)
         times, numbers, comments = dbu.getTimesNumbersCommentsBySelect(dbu, select)
-        labelA = QtWidgets.QLabel("hah")
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

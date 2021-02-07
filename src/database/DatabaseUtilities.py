@@ -41,21 +41,21 @@ class DatabaseUtilities():
         insert += "', '" + comment + "');"
         return insert     
 
-    def buildSelect(self, year, month, day):
-        select = "SELECT * FROM records WHERE year = "
-        select += str(year)
-        select += " AND month = "
-        select += str(month)
-        select += " AND day = "
-        select += str(day)
-        return select
+    def getDataByYearMonthDay(self, year, month, day):
+        connection, cursor = self.connectDB(self)
+        select = "SELECT * FROM records WHERE year ="+str(year)+" AND month="+str(month)+" AND day="+str(day)+";"
+        cursor.execute(select)        
+        result = cursor.fetchall()
+        connection.close()
+        return result
 
     def getTimesNumbersCommentsBySelect(self, data):
         times = []
         numbers = []
         comments = []
+        print(data)
         for i in range(len(data)):
-            times.append(data[i][3])
-            numbers.append(data[i][4])
-            comments.append(data[i][5])
+            times.append(data[i][2])
+            numbers.append(data[i][3])
+            comments.append(data[i][4])
         return times, numbers, comments
